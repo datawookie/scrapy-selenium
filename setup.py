@@ -1,34 +1,50 @@
-"""This module contains the packaging routine for the pybook package"""
+"""A setuptools based setup module.
+
+See:
+https://packaging.python.org/guides/distributing-packages-using-setuptools/
+https://github.com/pypa/sampleproject
+https://github.com/navdeep-G/setup.py
+
+https://docs.python.org/2/distutils/setupscript.html
+
+$ python setup.py build && python setup.py install
+"""
 
 from setuptools import setup, find_packages
-try:
-    from pip.download import PipSession
-    from pip.req import parse_requirements
-except ImportError:
-    # It is quick hack to support pip 10 that has changed its internal
-    # structure of the modules.
-    from pip._internal.download import PipSession
-    from pip._internal.req.req_file import parse_requirements
+from os import path
 
+here = path.abspath(path.dirname(__file__))
 
-def get_requirements(source):
-    """Get the requirements from the given ``source``
-
-    Parameters
-    ----------
-    source: str
-        The filename containing the requirements
-
-    """
-
-    install_reqs = parse_requirements(filename=source, session=PipSession())
-
-    return [str(ir.req) for ir in install_reqs]
-
+# Get the long description from the README file.
+#
+with open(path.join(here, 'README.md'), encoding='utf-8') as f:
+    long_description = f.read()
 
 setup(
-    packages=find_packages(),
-    install_requires=get_requirements('requirements/requirements.txt')
+    name='scrapy-selenium',
+    version='0.0.8',
+    description='Using Selenium (Remote) with Scrapy',
+    long_description=long_description,
+    long_description_content_type='text/markdown',
+    classifiers=[
+        'Development Status :: 3 - Alpha',
+        'Intended Audience :: Developers',
+        'Programming Language :: Python :: 3',
+        'Programming Language :: Python :: 3.5',
+        'Programming Language :: Python :: 3.6',
+        'Programming Language :: Python :: 3.7',
+        'Programming Language :: Python :: 3.8',
+        'Programming Language :: Python :: 3 :: Only',
+    ],
+    packages=['scrapy_selenium'],
+    python_requires='>=3.5, <4',
+    extras_require={
+    },
+    package_data={
+    },
+    data_files=[],
+    entry_points={
+    },
+    project_urls={
+    },
 )
-
-
